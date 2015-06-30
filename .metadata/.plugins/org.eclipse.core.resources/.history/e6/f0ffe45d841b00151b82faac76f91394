@@ -1,0 +1,45 @@
+<html ng-app="tictactoe">
+<head>
+	<link rel="stylesheet" type="text/css" href="css/ticTacStyle1.css" />
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+    <script src="http://synchroscope.herokuapp.com/sync.js"></script>
+    <script src="http://synchroscope.herokuapp.com/socket.io/socket.io.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    
+    <script src="js/ticTacToe1.js"></script>
+  </head>
+  
+<div ng-controller="Game">
+    <p>You are:
+        <label>
+            <input type="radio" value="O" ng-model="player" /><strong>O</strong>
+        </label>
+        <label>
+            <input type="radio" value="X" ng-model="player" value="Clear Board" /><strong>X</strong>
+        </label>
+    </p>
+    <div ng-show="$ynchronized">
+     <h2 ng-show="currentPlayer == player">Your Turn</h2>
+
+     <h2 ng-show="currentPlayer != player">Waiting for Opponent</h2>
+
+     <h2 ng-show="winner">WINNER IS {{winner}}!! <input type="button" ng-click="newGame()" value="New Game" /></h2>
+
+    <table border="1">
+        <tr ng-repeat="row in [0,1,2]">
+            <td ng-repeat="column in [0,1,2]" ng-click="cellClick(row,column)" ng-class="cellClass(row,column)">{{cellText(row,column)}}</td>
+        </tr>
+    </table>
+    </div>
+    <div ng-hide="$ynchronized">
+        <h2>Synchronizing with Server</h2>
+    </div>
+</div>
+
+</html>
